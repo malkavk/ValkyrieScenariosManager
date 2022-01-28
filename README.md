@@ -17,7 +17,7 @@ To execute this application somethings are required:
 3. Python 3.9
 4. Kivy 2.0
 
-## Instalation Kivy
+## Installing Kivy
 
 Kivy is a Python library that may be installed pip and require.txt.
 
@@ -37,9 +37,11 @@ or
 
     pip install kivy
 
-## Execution
+## Executing
 
-Just execute:
+Before execute at first time configure the scenariosmanager.ini. Change unique value in this file to your local configuration.
+
+After that, execute on a terminal (or create a application launcher with one of following commands):
 
     python3 main.py
 
