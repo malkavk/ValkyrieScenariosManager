@@ -1,0 +1,248 @@
+#:kivy 2.0
+#:import kivy kivy
+
+ScenarioManager:
+
+
+<ScenarioManager>:
+    PageLayout:
+        id: MAIN_PAGER
+        size: root.size
+        border: 0
+        anim_kwargs: {'d':0}
+        RelativeLayout:
+            AnchorLayout:
+                canvas:
+                    Color: 
+                        rgba: 0,0,0,1
+                    Rectangle:
+                        size: self.size
+                anchor_x: "center"
+                anchor_y: "center"
+                GridLayout:
+                    cols:1
+                    size_hint: None, None
+                    width: "250dp"
+                    height: "200dp"
+                    Label:
+                        text: "Manage"
+                    Button:
+                        id: mom
+                        text: "Mantions of Madness"
+                        on_release: root.on_quest_release(self, "mom")
+                    Label:
+                        text: "or"
+                    Button:
+                        id: d2e
+                        text: "Descent: Journeys in the Dark"
+                        on_release: root.on_quest_release(self, "d2e")
+        RelativeLayout:
+            AnchorLayout:
+                anchor_x: "center"
+                anchor_y: "center"
+                canvas:
+                    Color: 
+                        rgba: 0,0,0,1
+                    Rectangle:
+                        size: self.size
+                GridLayout:
+                    id: LOADING_PAGE
+                    cols: 1
+                    size_hint: None, None
+                    width: "200dp"
+                    height: "100dp"
+                    Label:
+                        id: LOADING_LABEL
+                        text: "Loading ..."
+                        pos: root.center_x - self.width / 2, root.center_y
+                        font_name: "resources/CthulhuCalling.otf"
+                        font_size: dp(40)
+                    # ProgressBar:
+                    #     value: root.current_execution_point
+                    #     min: 0
+                    #     max: root.max_execution_point
+                    Label:
+                        id: LOADING_MESSAGES
+        GridLayout:
+            cols: 1
+            size: root.size
+            PageLayout:
+                id: CONTENT_PAGER
+                border: 0
+                anim_kwargs: {'d':0}
+                RelativeLayout:
+                    canvas.before:
+                        Color: 
+                            rgba: 0,0,0,1
+                        Rectangle:
+                            size: self.size
+                    GridLayout:
+                        cols: 1
+                        GridLayout:
+                            cols: 2
+                            height: "30dp"
+                            size_hint: 1, None
+                            Label:
+                                id: NEW_TEXT
+                                text: "Checked: "+str(root.new_checked)+" of "+str(root.new_total)
+                                size_hint: 1, 1
+                                text_size: self.size
+                                halign: "left"
+                                valign: "middle"
+                            CustomButton:
+                                id: NEW_CHECK
+                                source: "resources/none.png"
+                                width: "26dp"
+                                height: "26dp"
+                                size_hint: None, None   
+                                pad_x: "2dp"
+                                pad_y: "3dp"
+                                on_press: root.on_new_check_pressed(self)
+                        ScrollView:
+                            id: NEW_SCROLLER
+                            GridLayout:
+                                id: NEW_CONTAINER
+                                cols:1
+                                size_hint_y: None
+                                height: self.minimum_height
+                RelativeLayout:
+                    canvas.before:
+                        Color: 
+                            rgba: 0,0,0,1
+                        Rectangle:
+                            size: self.size
+                    GridLayout:
+                        cols:1
+                        GridLayout:
+                            cols: 2
+                            height: "30dp"
+                            size_hint: 1, None
+                            Label:
+                                id: UPDATE_TEXT
+                                text: "Checked: "+str(root.update_checked)+" of "+str(root.update_total)
+                                size_hint: 1, 1
+                                text_size: self.size
+                                halign: "left"
+                                valign: "middle"
+                            CustomButton:
+                                id: UPDATE_CHECK
+                                source: "resources/none.png"
+                                width: "26dp"
+                                height: "26dp"
+                                size_hint: None, None   
+                                pad_x: "2dp"
+                                pad_y: "3dp"
+                                on_press: root.on_update_check_pressed(self)
+                        ScrollView:
+                            id: UPDATE_SCROLLER
+                            GridLayout:
+                                id: UPDATE_CONTAINER
+                                cols:1
+                                size_hint_y: None
+                                height: self.minimum_height
+                RelativeLayout:
+                    canvas.before:
+                        Color: 
+                            rgba: 0,0,0,1
+                        Rectangle:
+                            size: self.size
+                    GridLayout:
+                        cols: 1
+                        GridLayout:
+                            cols: 2
+                            height: "30dp"
+                            size_hint: 1, None
+                            Label:
+                                id: DELETE_TEXT
+                                text: "Checked: "+str(root.delete_checked)+" of "+str(root.delete_total)
+                                size_hint: 1, 1
+                                text_size: self.size
+                                halign: "left"
+                                valign: "middle"
+                            CustomButton:
+                                id: DELETE_CHECK
+                                source: "resources/none.png"
+                                width: "26dp"
+                                height: "26dp"
+                                size_hint: None, None   
+                                pad_x: "2dp"
+                                pad_y: "3dp"
+                                on_press: root.on_delete_check_pressed(self)
+                        ScrollView:
+                            id: DELETE_SCROLL
+                            GridLayout:
+                                id: DELETE_CONTAINER
+                                cols:1
+                                size_hint_y: None
+                                height: self.minimum_height
+                RelativeLayout:
+                    canvas.before:
+                        Color: 
+                            rgba: 0,0,0,1
+                        Rectangle:
+                            size: root.width, root.height
+                    AnchorLayout:
+                        anchor_x: "center"
+                        anchor_y: "center"
+                        GridLayout:
+                            id: EXECUTE_PAGE
+                            cols: 1
+                            size_hint: None, None
+                            height: "200dp"
+                            width: "200dp"
+                            Label:
+                                text: "New scenarios to download: "+str(root.new_checked)
+                            Label:
+                                text: "Scenarios do update: "+str(root.update_checked)
+                            Label:
+                                text: "Scenarios to delete: "+str(root.delete_checked)
+                            Button:
+                                text: "Do it"
+                                on_release: root.on_execute_release()
+                            ProgressBar:
+                                min: 0
+                                value: root.current_execution_point
+                                max: root.max_execution_point
+            GridLayout:
+                cols: 4
+                size: self.width, "100dp"
+                size_hint: 1, None
+                height: "50dp" 
+                ToggleButton:
+                    id: NEW_PAGER_BUTTON
+                    group: "interface"
+                    state: "down"
+                    background_color: {'normal': (.2,.2,.2,1), 'down': (0,0,0,1)} [self.state]
+                    allow_no_selection: False
+                    on_press: root.on_toolbar_press(0)
+                    Image:
+                        source: "resources/download_E.png"
+                        x: dp(self.parent.x + self.parent.width / 2 - self.width / 2)
+                ToggleButton:
+                    id: UPDATE_PAGER_BUTTON
+                    group: "interface"
+                    background_color: {'normal': (.2,.2,.2,1), 'down': (0,0,0,1)} [self.state]
+                    allow_no_selection: False
+                    on_press: root.on_toolbar_press(1)
+                    Image:
+                        source: "resources/upgrade_E.png"
+                        x: dp(self.parent.x + self.parent.width / 2 - self.width / 2)
+                ToggleButton:
+                    id: DELETE_PAGER_BUTTON
+                    group: "interface"
+                    background_color: {'normal': (.2,.2,.2,1), 'down': (0,0,0,1)} [self.state]
+                    allow_no_selection: False
+                    on_press: root.on_toolbar_press(2)
+                    Image:
+                        source: "resources/delete_E.png"
+                        x: dp(self.parent.x + self.parent.width / 2 - self.width / 2)
+                ToggleButton:
+                    id: EXECUTE_PAGER_BUTTON
+                    group: "interface"
+                    background_color: {'normal': (.2,.2,.2,1), 'down': (0,0,0,1)} [self.state]
+                    allow_no_selection: False
+                    on_press: root.on_toolbar_press(3)
+                    Image:
+                        source: "resources/execute_E.png"
+                        x: dp(self.parent.x + self.parent.width / 2 - self.width / 2)
+                
