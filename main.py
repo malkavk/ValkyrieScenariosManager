@@ -33,7 +33,7 @@ class ScenarioManager(Widget):
     INITIAL_INI_FILE = ''''#
 # valkyrie_config_directory must be OS path to where Valkyrie stores its downloaded content (MoM and D2N quests)
 # For example: on Linux this path is ~/.config/Valkyrie/ 
-#
+# "~" is user home directory.
 [Scenarios Manager]
 valkyrie_config_directory=~/.config/Valkyrie/
 '''
