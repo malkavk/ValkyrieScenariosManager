@@ -1,10 +1,10 @@
 # .valkyrie Manager
 
-This is Python 3.9/Kivy 2.0 application that helps to manage quest (.valkyrie) files.
+This is a Python 3.9/Kivy 2.0 application that helps to manage quest (.valkyrie) files.
 
-It identifies new quests and quests with avialable update, allowing to download none, some or all at once.
+It identifies new quests and quests with avialable update, allowing to download none, some or all them at once.
 
-It is possible to remove none, some ot all downloaded quests too.
+It is possible to remove none, some or all downloaded quests too.
 
 Its interface displays each category of quest (new, updatable or removable) and user can mark any of displayed quests to operate (download, update or remove).
 
@@ -39,7 +39,7 @@ or
 
 ## Executing
 
-Before execute at first time configure the scenariosmanager.ini. Change unique value in this file to your local configuration.
+Before execute at first time, configure the scenariosmanager.ini. Change the unique value in this file to your local configuration.
 
 After that, execute on a terminal (or create a application launcher with one of following commands):
 
