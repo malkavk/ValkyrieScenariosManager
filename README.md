@@ -1,6 +1,6 @@
 # .valkyrie Manager
 
-This is Python 3.9/Kyvi 2.0 application that helps to manage quest (.valkyrie) files.
+This is Python 3.9/Kivy 2.0 application that helps to manage quest (.valkyrie) files.
 
 It identifies new quests and quests with avialable update, allowing to download none, some or all at once.
 
