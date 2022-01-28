@@ -13,7 +13,7 @@ from kivy.graphics.vertex_instructions import Line, Rectangle
 from kivy.graphics.context_instructions import Color
 
 import os
-
+from datetime import datetime
 
 class ScenarioManager(Widget):
     """
@@ -29,6 +29,8 @@ class ScenarioManager(Widget):
     """Default icon for quests."""
     INI_FILE = './scenariosmanager.ini' 
     """Configuration file for Scenarios Manager."""
+
+    LOG_FILE = "scenariosmanager.log"
 
     INITIAL_INI_FILE = ''''#
 # valkyrie_config_directory must be OS path to where Valkyrie stores its downloaded content (MoM and D2N quests)
@@ -90,6 +92,11 @@ valkyrie_config_directory=~/.config/Valkyrie/
         Initializes main objects.
         """
         super().__init__(**kwargs)
+        self.log(" ")
+        self.log(" ")
+        self.log(" ")
+        self.log('>>>>>>>>>>>>>>>   ' + str(datetime.now().strftime("%d/%m/%Y %H:%M:%S")) + '   <<<<<<<<<<<<<<<')
+        self.log(" ")
         self._load_ini()
 
     def on_quest_release(self, widget: Widget, value: str) -> None:
@@ -328,6 +335,10 @@ valkyrie_config_directory=~/.config/Valkyrie/
         # Max operations definition
         self.max_execution_point = self.new_checked + self.update_checked + self.delete_checked
 
+        self.log(" ")
+        self.log(" ")
+        self.log("-----> Starting operations <-----")
+        
 
         Clock.schedule_interval(self.update_data, 0.5)
             
@@ -356,8 +367,10 @@ valkyrie_config_directory=~/.config/Valkyrie/
             ## Increment current execution point
             self.current_execution_point += 1
             if self.current_execution_point <= self.max_execution_point:
-                print("Executing operation... ("+str(self.current_execution_point)+"/"+str(self.max_execution_point)+")")
-            if self.current_execution_point <= self.new_checked:
+                self.log(" ")
+                self.log("Executing operation... ("+str(self.current_execution_point)+"/"+str(self.max_execution_point)+")")
+            if self.new_checked > 0:
+                self.log("Operation type: New quest")
                 # Download new quests
                 ## List of items selection
                 container = self.ids['NEW_CONTAINER']
@@ -370,6 +383,7 @@ valkyrie_config_directory=~/.config/Valkyrie/
                     if container.children[item].children[0].state == 'down':
                         button = container.children[item].children[0]
                 title = button.text
+                self.log("Current quest: "+title)
                 ## Add selected quest to local list of quest
                 self._local_quests[title] = self._new_quests[title]
                 ## Download of quest and manifest.ini update
@@ -377,7 +391,8 @@ valkyrie_config_directory=~/.config/Valkyrie/
                 ## Unselect quest
                 self.new_checked -=1
                 button.state = 'normal'
-            elif self.current_execution_point <= self.new_checked + self.update_checked:
+            elif self.update_checked > 0:
+                self.log("Operation type: Update quest")
                 # Update existing quests
                 ## List of items selection
                 container = self.ids['UPDATE_CONTAINER']
@@ -391,6 +406,7 @@ valkyrie_config_directory=~/.config/Valkyrie/
                         button = container.children[item].children[0]
                 ## Identification of selected quest
                 title = button.text
+                self.log("Current quest: "+title)
                 ## Identification of updatable quests
                 updatable_quests[title] = self._local_quest[title]
                 ## Download of quest and manifest.ini update
@@ -398,7 +414,8 @@ valkyrie_config_directory=~/.config/Valkyrie/
                 ## Unselect quest
                 self.update_checked -= 1
                 button.state = 'normal'
-            elif self.current_execution_point <= self.max_execution_point:
+            elif self.delete_checked > 0:
+                self.log("Operation type: Remove quest")
                 # Delete existing quests
                 ## List of items selection
                 container = self.ids['DELETE_CONTAINER']
@@ -412,6 +429,7 @@ valkyrie_config_directory=~/.config/Valkyrie/
                         button = container.children[item].children[0]
                 ## Quest identification
                 title = button.text
+                self.log("Current quest: "+title)
                 ## Quests must be delete only if they weren´t updated
                 if not title in updatable_quests.keys():
                     ## Quest copy
@@ -424,30 +442,42 @@ valkyrie_config_directory=~/.config/Valkyrie/
                 self.delete_checked -= 1
                 button.state = 'normal'
             else:
-                # Finishing execution
-                Clock.unschedule(self.update_data)
-                self.ids['MAIN_PAGER'].page=1
+                if self.new_checked==0 and self.update_checked==0 and self.delete_checked==0:
+                    # Finishing execution
+                    self.log("-----> Operations finished <-----")
+                    self.log(" ")
+                    Clock.unschedule(self.update_data)
+                    self.ids['MAIN_PAGER'].page=1
 
-                def show_wait_execute(dt):
-                    """
-                    Sub function only for scheduled execution. This takes time to interface redraw
-                    """
-                    # Load data
-                    self._load_data( self._manifest_file )
-                    
-                    # Set UI to initial state
-                    self._clear_pager_state()
+                    def show_wait_execute(dt):
+                        """
+                        Sub function only for scheduled execution. This takes time to interface redraw
+                        """
+                        # Load data
+                        self._load_data( self._manifest_file )
+                        
+                        # Set UI to initial state
+                        self._clear_pager_state()
 
-                Clock.schedule_once(show_wait_execute, .2)
-                self._executing = False
+                    Clock.schedule_once(show_wait_execute, .2)
+                    self._executing = False
         except Exception as e:
-            print("Current quest: {title}")
-            print(e)
-            print(e.with_traceback)
-            print(e.args)
+            self.log(" ")
+            self.log("########################")
+            self.log("Current quest: "+title)
+            self.log("--------------")
+            self.log(" ")
+            self.log(e)
+            self.log(e.with_traceback)
+            self.log(e.args)
+            self.log(e.__traceback__)
+            self.log("########################")
+            self.log(" ")
         finally:
             # Releases to next operation be done
             self._updating_data = False
+            
+
 
     def _clear_pager_state(self) -> None:
         """
@@ -463,6 +493,21 @@ valkyrie_config_directory=~/.config/Valkyrie/
         self.ids['UPDATE_CHECK'].source="resources/none.png"
         self.ids['DELETE_CHECK'].source="resources/none.png"
         
+
+    def log(self, log: str) -> None:
+        """
+        Writes text to log file.
+
+        Parameters
+        ----------
+
+        log : st
+            Text to be logged.
+        """
+
+        with open(self.LOG_FILE, 'a') as log_file:
+            log_file.write(str(log)+'\n')
+
 class CustomButton(ButtonBehavior, Image):
     def __init__(self, **kwargs):
         super(CustomButton, self).__init__(**kwargs)
