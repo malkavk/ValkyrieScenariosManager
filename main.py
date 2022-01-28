@@ -375,6 +375,7 @@ valkyrie_config_directory=~/.config/Valkyrie/
                 ## Download of quest and manifest.ini update
                 self._download_new(self._local_quests[title], self._destination_path, self._local_quests, self._manifest_file)    
                 ## Unselect quest
+                self.new_checked -=1
                 button.state = 'normal'
             elif self.current_execution_point <= self.new_checked + self.update_checked:
                 # Update existing quests
@@ -395,6 +396,7 @@ valkyrie_config_directory=~/.config/Valkyrie/
                 ## Download of quest and manifest.ini update
                 self._download_new(self._local_quests[title], self._destination_path, self._local_quests, self._manifest_file)
                 ## Unselect quest
+                self.update_checked -= 1
                 button.state = 'normal'
             elif self.current_execution_point <= self.max_execution_point:
                 # Delete existing quests
@@ -419,6 +421,7 @@ valkyrie_config_directory=~/.config/Valkyrie/
                     ## Quest file removal and manifest.ini update
                     self._remove(quest, self._destination_path, self._local_quests, self._manifest_file)
                 ## Unselect quest
+                self.delete_checked -= 1
                 button.state = 'normal'
             else:
                 # Finishing execution
