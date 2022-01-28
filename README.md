@@ -58,7 +58,7 @@ This application were well execute on:
 - Ubuntu Linux 21.10
 - Fedora Linux 35
 
-## Scrennshots
+## Screenshots
 
 ![Game Selection](resources/game_selection.png)
 ![New scenarios page](resources/new_scenarios.png)
