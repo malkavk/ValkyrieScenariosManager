@@ -19,7 +19,7 @@ To execute this application somethings are required:
 
 ## Installing Kivy
 
-Kivy is a Python library that may be installed pip and require.txt.
+Kivy is a Python framework for GUI construction.
 
 Kivy may be installed using requirments file or directaly with:
 
