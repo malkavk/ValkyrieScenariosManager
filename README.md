@@ -10,5 +10,5 @@ Its interface displays each category of quest (new, updatable or removable) and 
 
 Information about requirements, instalation, execution and another stuffs see [Wiki pages](https://github.com/malkavk/ValkyrieScenariosManager/wiki)
 
-Depending on your Python installation.
+
 
