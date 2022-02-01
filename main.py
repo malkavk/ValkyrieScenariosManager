@@ -408,7 +408,9 @@ valkyrie_config_directory=~/.config/Valkyrie/
                 title = button.text
                 self.log("Current quest: "+title)
                 ## Identification of updatable quests
-                updatable_quests[title] = self._local_quest[title]
+                updatable_quests[title] = self._remote_quests[title]
+                ## Update of local quest
+                self._local_quests[title] = self._remote_quests[title]
                 ## Download of quest and manifest.ini update
                 self._download_new(self._local_quests[title], self._destination_path, self._local_quests, self._manifest_file)
                 ## Unselect quest
