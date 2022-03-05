@@ -13,4 +13,4 @@ Information about requirements, instalation, execution and another stuffs may be
 
 Version Updates:
 
-1.1 Fixed update scenario issue (after update Valkyrie detects update, but manager not).
+1.1 Fixed update scenario issue (after update a scenario, Valkyrie detects update as available, but manager doesn't).
