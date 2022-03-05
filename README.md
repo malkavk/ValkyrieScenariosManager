@@ -1,4 +1,4 @@
-# .valkyrie Manager
+# .valkyrie Manager (v1.1)
 
 This is a Python 3.9/Kivy 2.0 application that helps to manage quest (.valkyrie) files (from [Valkyrie app](https://github.com/NPBruce/valkyrie))
 
