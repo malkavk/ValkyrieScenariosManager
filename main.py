@@ -405,14 +405,20 @@ valkyrie_config_directory=~/.config/Valkyrie/
                     if container.children[item].children[0].state == 'down':
                         button = container.children[item].children[0]
                 ## Identification of selected quest
-                title = button.text
-                self.log("Current quest: "+title)
+                local_title = ""
+                remote_title = button.text
+                name = self._remote_quests[remote_title].name
+                for local_key in self._local_quests.keys():
+                    if self._local_quests[local_key].name == name:
+                        local_title = self._local_quests[local_key].title
+                self.log("Current quest: "+remote_title)
                 ## Identification of updatable quests
-                updatable_quests[title] = self._remote_quests[title]
+                updatable_quests[remote_title] = self._remote_quests[remote_title]
                 ## Update of local quest
-                self._local_quests[title] = self._remote_quests[title]
+                del(self._local_quests[local_title])
+                self._local_quests[remote_title] = self._remote_quests[remote_title]
                 ## Download of quest and manifest.ini update
-                self._download_new(self._local_quests[title], self._destination_path, self._local_quests, self._manifest_file)
+                self._download_new(self._local_quests[remote_title], self._destination_path, self._local_quests, self._manifest_file)
                 ## Unselect quest
                 self.update_checked -= 1
                 button.state = 'normal'
@@ -515,7 +521,7 @@ class CustomButton(ButtonBehavior, Image):
         super(CustomButton, self).__init__(**kwargs)
 
 class ScenarioManagerApp(App):
-    title = ".valkyrie Manager "
+    title = ".valkyrie Manager (v1.1)"
 
 if __name__=="__main__":
     ScenarioManagerApp().run()
