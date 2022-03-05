@@ -11,4 +11,6 @@ Its interface displays each category of quest (new, updatable or removable) and 
 Information about requirements, instalation, execution and another stuffs may be founded at [Wiki pages](https://github.com/malkavk/ValkyrieScenariosManager/wiki)
 
 
+Version Updates:
 
+1.1 Fixed update scenario issue (after update Valkyrie detects update, but manager not).
