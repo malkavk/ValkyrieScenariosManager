@@ -55,8 +55,9 @@ Depending on your Python installation.
 
 This application were well execute on:
 
-- Ubuntu Linux 21.10
-- Fedora Linux 35
+- Ubuntu Linux 21.10, 22.10, 23.10 and 24.10
+- Fedora Linux 35, 36, 37, 38, 39, 40, 41 and 42
+- Zorin OS 18.1
 
 ## Screenshots
 
